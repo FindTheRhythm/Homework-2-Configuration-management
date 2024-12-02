@@ -36,7 +36,7 @@ python -m unittest ./tests/test_visualizer.py
 
 ## Результат юнит-тестов программы
 
-![](https://github.com/FindTheRhythm/Homework-2-Configuration-management/blob/81ee604aaa963a43ed0a1be28cdc16d254bbc988/target_2/images/Screenshot%202024-12-02%20145455.png)
+![](https://github.com/FindTheRhythm/Homework-2-Configuration-management/blob/23cf9d79b694dc652a01a5a68ec613ce130b5f74/target_2/images/Screenshot%202024-12-02%20224423.png)
 
 ## Результат работы программы
 
