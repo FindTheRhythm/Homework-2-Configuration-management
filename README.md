@@ -26,7 +26,7 @@ pip install -r requirements.txt
 # Пример команды запуска для графа зависимостей Newtonsoft.Json
 
 cd target_2
-python visualizer.py --visualizer_path ./visualizer.py --package_name Newtonsoft.Json --output_png_path ./output/output_graph_1 --url https://www.nuget.org/api/v2/package/Newtonsoft.Json/13.0.3
+python visualizer.py --visualizer_path ./visualizer.py --package_name Newtonsoft.Json --output_png_path ./output/output_graph_1.png --url https://www.nuget.org/api/v2/package/Newtonsoft.Json/13.0.3
 ```
 ## Команда для запуска юнит-тестов
 ```
