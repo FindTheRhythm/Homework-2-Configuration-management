@@ -3,14 +3,13 @@ from unittest.mock import patch, MagicMock
 import requests
 from io import BytesIO
 import zipfile
-from graphviz import Digraph
-from io import BytesIO
+import os
 
 # Импортируем функции из вашего кода
-from visualizer import download_nupkg, extract_dependencies, build_graph, save_graph_as_png
+from visualizer import download_nupkg, extract_dependencies, build_mermaid_graph, save_mermaid_to_file
 
 
-class TestPackageVisualizer(unittest.TestCase):
+class TestPackageVisualizerMermaid(unittest.TestCase):
 
     # Тестируем функцию скачивания .nupkg файла
     @patch('requests.get')
@@ -59,33 +58,38 @@ class TestPackageVisualizer(unittest.TestCase):
         # Проверяем, что извлеченные зависимости правильные
         self.assertEqual(dependencies, [])
 
-    # Тестируем функцию построения графа
-    def test_build_graph(self):
+    # Тестируем функцию построения графа в формате Mermaid
+    def test_build_mermaid_graph(self):
         package_name = "MyPackage"
         dependencies = ['PackageA', 'PackageB']
 
-        # Строим граф
-        dot = build_graph(package_name, dependencies)
+        # Строим Mermaid-граф
+        mermaid_graph = build_mermaid_graph(package_name, dependencies)
 
-        # Проверяем, что узлы и рёбра добавлены в граф
-        self.assertIn(f'\t{package_name} [label={package_name}]\n', dot.source)  # Граф должен содержать узел для пакета
-        self.assertIn(f'\tPackageA [label=PackageA]\n', dot.source)  # Граф должен содержать зависимость PackageA
-        self.assertIn(f'\tPackageB [label=PackageB]\n', dot.source)  # Граф должен содержать зависимость PackageB
-        self.assertIn(f'{package_name} -> PackageA\n',
-                      dot.source)  # Граф должен содержать связь между пакетом и его зависимостью
-        self.assertIn(f'{package_name} -> PackageB\n', dot.source)  # Аналогично для второй зависимости
+        # Проверяем, что граф содержит ожидаемые элементы
+        self.assertIn("graph TD", mermaid_graph)  # Граф должен начинаться с "graph TD"
+        self.assertIn(f"{package_name}[{package_name}]", mermaid_graph)  # Должен содержать узел пакета
+        self.assertIn(f"{package_name} --> PackageA", mermaid_graph)  # Связь с зависимостью PackageA
+        self.assertIn(f"{package_name} --> PackageB", mermaid_graph)  # Связь с зависимостью PackageB
 
-    # Тестируем функцию сохранения графа в PNG
-    @patch('graphviz.Digraph.render')
-    def test_save_graph_as_png(self, mock_render):
-        mock_dot = MagicMock(spec=Digraph)
-        output_path = 'output_graph.png'
+    # Тестируем функцию сохранения Mermaid-графа в файл
+    @patch('builtins.open', new_callable=MagicMock)
+    @patch('os.makedirs')
+    def test_save_mermaid_to_file(self, mock_makedirs, mock_open):
+        mermaid_graph = "graph TD\nMyPackage --> PackageA\nMyPackage --> PackageB"
+        output_path = 'output_graph.mmd'
 
         # Вызываем функцию сохранения
-        save_graph_as_png(mock_dot, output_path)
+        save_mermaid_to_file(mermaid_graph, output_path)
 
-        # Проверяем, что render был вызван с правильным путем
-        mock_dot.render.assert_called_with(output_path, format='png', cleanup=True)
+        # Проверяем, что директория была создана
+        mock_makedirs.assert_called_once_with(os.path.dirname(output_path), exist_ok=True)
+
+        # Проверяем, что файл был открыт для записи
+        mock_open.assert_called_once_with(output_path, 'w', encoding='utf-8')
+
+        # Проверяем, что write был вызван с правильным содержимым
+        mock_open.return_value.__enter__().write.assert_called_once_with(mermaid_graph)
 
 
 if __name__ == '__main__':
