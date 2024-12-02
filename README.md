@@ -20,19 +20,24 @@
 
 ## Команда для запуска проекта
 ```
+cd target_2
+# Пояснение команды: python visualizer.py --visualizer_path <путь к программе визуализации> --package_name <Имя пакета> --output_png_path <путь, куда будет сохранятся изображение> --url <ссылка на репозиторий>
+# Пример команды для графа зависимостей Newtonsoft.Json
+python visualizer.py --visualizer_path ./visualizer.py --package_name Newtonsoft.Json --output_png_path ./output/output_graph_1 --url https://www.nuget.org/api/v2/package/Newtonsoft.Json/13.0.3
 
 ```
 ## Команда для запуска юнит-тестов
 ```
-
+cd target_2
+python -m unittest ./tests/test_visualizer.py
 ```
 
 ## Результат юнит-тестов программы
 
 ![]()
-![]()
-![]()
 
 ## Результат работы программы
 
+![]()
+![]()
 ![]()
