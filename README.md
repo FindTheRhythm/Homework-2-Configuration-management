@@ -40,6 +40,7 @@ python -m unittest ./tests/test_visualizer.py
 
 ## Результат работы программы
 
-![]()
-![]()
-![]()
+![](https://github.com/FindTheRhythm/Homework-2-Configuration-management/blob/d67ba6ff3c43556bca7a716f6c44ff2a76634ebc/target_2/images/Screenshot%202024-12-02%20145817.png)
+![](https://github.com/FindTheRhythm/Homework-2-Configuration-management/blob/d67ba6ff3c43556bca7a716f6c44ff2a76634ebc/target_2/output/output_graph_1.png)
+![](https://github.com/FindTheRhythm/Homework-2-Configuration-management/blob/d67ba6ff3c43556bca7a716f6c44ff2a76634ebc/target_2/output/output_graph_2.png)
+![](https://github.com/FindTheRhythm/Homework-2-Configuration-management/blob/d67ba6ff3c43556bca7a716f6c44ff2a76634ebc/target_2/output/output_graph_3.png)
